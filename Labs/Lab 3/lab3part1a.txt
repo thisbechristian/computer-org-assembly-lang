@@ -1,0 +1,9 @@
+Question 1: What is the address of the byte with value 0xA4?
+	-> The address of the byte 0xA4 is: 0x10010002
+
+Question 2: What is the address of the byte with value 0xA4 now?
+	-> The address of the byte 0xA4 is now: 0x10010001
+
+Question 3: Is the simulator little endian or big endian? How can you tell?
+	-> The simulator is LITTLE ENDIAN. This is true because in little endian the
+	least significant byte (LSB) gets store in the smallest address. As in this 		example the LSB is '4D' which was stored in the smallest address: 0x10010000.

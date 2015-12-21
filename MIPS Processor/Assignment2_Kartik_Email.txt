@@ -1,0 +1,40 @@
+
+Hi class,
+
+Hello class,
+
+Here is a detailed email that I would like you to use as your one-stop shop for project 2. The project is due by 11:59pm on April 21 in David's inbox.
+
+-- Project description and assembler manual (single document CoEMIPS.pdf)
+
+-- Assembler courtesy our fine friends in CS (jrmipsasm.pl)
+
+-- Some test cases as asm files to get the ball rolling (more to follow in a couple of weeks, after you have a rudimentary implementation in place)
+-- increment.asm Tests add
+-- load.asm Tests loading from memory
+-- addshift.asm More complete add, shift, branch test
+-- loadstore.asm Checks storing and loading
+-- function.asm Tests jal and jr with load and store
+
+Hints and big picture considerations to guide the implementation:
+
+Decompose your circuits! I recommend that you do not create a single "super ALU" that does every function in one subcircuit. Instead, I suggest that you use a few different subcircuits, including the four function ALU, a shifter subcircuit (selects among left and right shift), a branch comparison subcircuit, and a hex display subcircuit.
+
+Use multiple control units: There are likely too many control signals to create a single control unit. Instead, group the control signals into reasonable partitions, such as all control signals for branches and jumps, or all control for arithmetic operations. Turn these into separate subcircuit control units. My prototype implementation of the project has six subcircuits for control. The idea is like programming: break the task into smaller chunks that can be done by procedures (except, this time it's subcircuits).
+
+K-maps? Who needs that? Logisim has a nifty tool call Combinational Analysis (look under the drop-down menu "Window" for "Combinational Analysis"). In this tool, you create a truth table, and then you press a button, and by magic, Logisim creates a simplified combinational circuit for the truth table! Nifty! And a HUGE time saver. You'll want to use the Combinational Analysis to create your control units. It's a huge help. Another trick: After you've made the circuit, group individual pins into a multi-bit pin. For example, the Opcode bits can be grouped into a single 4-bit input to the control unit. This will make wiring simpler.
+
+Use Logisim's library: Logisim has a lot of components that you can use directly. Be sure to use them! You don't have to build the ALU from the ground up, i.e., you don't need to create a 16-bit ripple-carry adder, as Logisim already offers an adder that can be configured to add 16 bit quantities. Similarly, there's a shifter, sign and zero extenders, etc.
+
+Implementing Halt instruction: The project description is confusing about how to halt the processor. Here is the simplest way. The program counter has an enable signal (it is a register). This enable signal should be set to 1 for all instructions, except halt. When a halt instruction is encountered, set the enable for the program counter to 0. This can be done simply with control: Check for the opcode 0111, and then generate enable=0 for this case. This has the effect that the program counter won't be updated any further, and hence, the halt instruction will continue to be executed (keeping enable=0), which stops the processor from fetching any new instructions! Neat!
+
+Where to start? The hardest part is to start the project. It seems daunting! If you do it a little bit at a time, it is much simpler. I recommend that you start with the ALU. Make a simple four function ALU to support sub, add, and, and nor. Next, make the register file. Connect the register file to the ALU (read and write). Add some pins for the control signals. Now, poke at the pins to make the ALU perform operations on the register values. You can also poke at the registers to set them to some values so you can operate on numbers other than 0 (trying only 0s doesn't really help test the circuit!). After you've got this part, then start to add the instruction memory and a simple decoder. Implement halt and the put instruction. These will be useful for debugging. Now, continue with more instructions, like the shifts, add immediate, etc. Then it's on to branches, loads and stores, and finally jumps.
+
+Important: Put the instruction ROM, data RAM, and Hex Digits in the main circuit. We need to work with these components to grade the assignment and this will make it easier.
+
+Finally, I am also attaching the ppt slides to go with the final set of lectures for the semester. They will be very useful as you go about understanding the material and also implementing your design project.
+
+As always, when you need help, please email David and Cc me so that one of us can respond to you asap.
+
+Good luck,
+Kartik

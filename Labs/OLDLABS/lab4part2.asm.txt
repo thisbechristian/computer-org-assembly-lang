@@ -1,0 +1,73 @@
+#CS/COE 447 Lab 4 Part 2 Template
+
+#This template includes testing code, but also has some support code to check
+#for a common error.
+
+.text:
+        #This is the beginning of the testing code. 
+
+		# you may put additional instructions to calculate the addresses and bit patterns
+
+		li $a0, your_address	# replace your_address with the actual address
+        li $a1, your_pattern    # replace your_pattern with the actual pattern
+        li $a2, 5               #Draw the pattern 5 times Diagonally.
+        jal drawDiagonalPattern #Jump and link to drawDiagonalPattern.
+
+		li $a0, your_address	# replace your_address with the actual address
+        li $a1, your_pattern    # replace your_pattern with the actual pattern
+        li $a2, 5               #Draw the pattern 5 times vertically.
+        jal drawDiagonalPattern #Jump and link to drawDiagonalPattern.
+
+		# do not alter 
+        la $a0, successfulQuitMessage
+        li $v0, 4
+        syscall
+
+        li $v0, 10             #Exit syscall
+        syscall
+
+        #This is the end of the testing code.
+
+#========================================
+# * Place your drawPattern code here    *
+#========================================
+    drawPattern:
+        #TODO: Fill this function in.
+
+
+
+#========================================
+# * DO NOT ALTER THIS NEXT LINE         *
+j returnErrorHappened
+#========================================
+
+
+
+
+#========================================
+# * Place drawRepeatedPattern code here *
+#========================================
+    drawRepeatedPattern:
+        #TODO: Fill this function in.
+        #This function must make use of your drawPattern function.
+
+
+
+#========================================
+# * DO NOT ALTER THIS NEXT LINE         *
+j returnErrorHappened
+#========================================
+
+
+returnErrorHappened:
+    #If this code is executed, your function did not properly return.
+    la $a0, badReturnMessage
+    li $v0, 4
+    syscall
+    li $v0, 10
+    syscall
+
+.data:
+    badReturnMessage:       .asciiz "A function did not properly return!"
+    successfulQuitMessage:  .asciiz "The program has finished."
+

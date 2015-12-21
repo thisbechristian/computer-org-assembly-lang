@@ -1,0 +1,71 @@
+#David Dgien
+#CoE 0147 Recitation
+#Random Number Generation
+.data
+newline: .asciiz "\n"
+
+.text
+
+#Initialize random number generator
+li $v0 40
+li $a0, 1
+li $a1, 42
+
+syscall
+
+li $s0, 41 #random int
+li $s1, 1
+li $s2, 0
+
+jal gen_func
+
+li $s0, 42 #random int range
+li $s1, 1
+li $s2, 20 #0-19
+
+jal gen_func
+
+#inialize with system time
+
+li $v0 30
+syscall
+
+li $v0 40
+addi $a1, $a0, 0
+li $a0, 2
+syscall
+
+li $s0, 42
+li $s1, 2
+li $s2, 20
+
+jal gen_func
+
+li $v0 10  #Exit Program
+syscall
+
+
+
+gen_func:
+	li $t0, 10
+gen_loop:
+	addi $v0, $s0, 0 #get rng parameters
+	addi $a0, $s1, 0
+	addi $a1, $s2, 0
+	syscall
+	
+	li $v0, 1  #print number
+	syscall
+	
+	la $a0, newline
+	li $v0, 4
+	syscall
+	
+ 	addi $t0, $t0, -1
+	bnez $t0, gen_loop
+	
+	la $a0, newline
+	li $v0, 4
+	syscall
+	
+	jr $ra
